@@ -40,6 +40,11 @@
 
 **对于终端可视化版本**：
 
+
+以下是一个简单的演示：
+
+![TerminalVersion|20](https://github.com/Lyon673/DotsAndBoxes/blob/master/DandB.gif)
+
 属于玩家1的点和格用红色表示，属于玩家2的点和格用蓝色表示
 
 当玩家在选择占据哪条边时，移动路径上的边用黄色标明
