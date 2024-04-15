@@ -43,7 +43,7 @@
 
 以下是一个简单的演示：
 
-![TerminalVersion|20](https://github.com/Lyon673/DotsAndBoxes/blob/master/DandB.gif)
+<img src="https://github.com/Lyon673/DotsAndBoxes/blob/master/DandB.gif" width="450" alt="TerminalVersion"/>
 
 属于玩家1的点和格用红色表示，属于玩家2的点和格用蓝色表示
 
