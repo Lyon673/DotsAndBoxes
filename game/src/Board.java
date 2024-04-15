@@ -17,8 +17,8 @@ public class Board {
         isEdgeEmpty = false;
         EdgeUsed = 0;
 
-        collen = 6;
-        rowlen = 4;
+        collen = 3;
+        rowlen = 2;
         BoxArray = new Box[collen][rowlen];
         colEdge = new Edge[collen + 1][rowlen];
         rowEdge = new Edge[collen][rowlen + 1];

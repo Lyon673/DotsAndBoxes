@@ -37,7 +37,7 @@ public class Game {
 
             model.Print();
             while(whoToChoose == 0) {
-                System.out.println("PRITN IN:");
+                System.out.println("KEY IN:");
                 Scanner sc = new Scanner(System.in);
                 String cmnd = sc.next();
                 System.out.println("ANS:"+cmnd);
@@ -56,10 +56,12 @@ public class Game {
                         model.Print();
                         break;
                     case "\u0070":
-                        boolean succcess = model.Choose(cmnd);
-                        if(succcess) {
+                        boolean[] success = model.Choose(cmnd);
+                        if(success[0]) {
                             model.renew();
-                            whoToChoose = 1;
+                            if(!success[1]){
+                                whoToChoose = 1;
+                            }
                             flag = true;
                             model.Print();
                         }
@@ -71,7 +73,7 @@ public class Game {
             }
 
             while(whoToChoose == 1) {
-                System.out.println("PRITN IN:");
+                System.out.println("KEY IN:");
                 Scanner sc = new Scanner(System.in);
                 String cmnd = sc.next();
                 System.out.println("ANS:"+cmnd);
@@ -89,10 +91,12 @@ public class Game {
                         model.Print();
                         break;
                     case "\u0074":
-                        boolean succcess = model.Choose(cmnd);
-                        if(succcess) {
+                        boolean[] success = model.Choose(cmnd);
+                        if(success[0]) {
                             model.renew();
-                            whoToChoose = 0;
+                            if(!success[1]){
+                                whoToChoose = 0;
+                            }
                             flag = true;
                             model.Print();
                         }

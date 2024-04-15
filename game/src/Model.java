@@ -31,15 +31,17 @@ public class Model{
      * the parameter "col" and "row" are a little different from the definition in other place in this project.
      * here the two edgearrays are combined to only one, whose size is (collen+1) times (2*rowlen+1)
      */
-    public boolean Choose(int col, int row, Player player) {
+    public boolean[] Choose(int col, int row, Player player) {
+        boolean[] ans = new boolean[2];
         Edge edge = FindLocation(col, row);
         if(edge.Owner() != null){
-            return false;
+            return ans;
         }
         edge.Belongto(player);
         board.renewalGameOverFlag();
-        checkBoxOwner(edge, player);
-        return true;
+        ans[0] = true;
+        ans[1] = checkBoxOwner(edge, player);
+        return ans;
     }
 
     private String whichArray(int col, int row) {
@@ -60,15 +62,18 @@ public class Model{
 
 
     /** if the edges around a box are all occupied, then it belongs to the one who owns the surrounding edge at last. */
-    public void checkBoxOwner(Edge e, Player player) {
+    public boolean checkBoxOwner(Edge e, Player player) {
         Box[] neighbor = e.neighborBox();
         for (int i = 0; i < 2; i++) {
             if(neighbor[i] != null) {
                 if(neighbor[i].checkFourEdge()) {
                     neighbor[i].Belongto(player);
+                    return true;
                 }
             }
         }
+
+        return false;
 
     }
 
@@ -155,13 +160,13 @@ public class Model{
 
 
 
-    public boolean Choose(String s){
+    public boolean[] Choose(String s){
         if(Objects.equals(s, "\u0070")){
             return Choose(tmpcol, tmprow, Player1);
         } else if (Objects.equals(s, "\u0074")) {
             return Choose(tmpcol, tmprow, Player2);
         }
-        return true;
+        return new boolean[]{false, false};
     }
 
     @Override
@@ -178,14 +183,14 @@ public class Model{
         /** visualize the topside row of edges */
         for (int col = 0; col < collen ; col++) {
             if(board.rowEdge[col][rowlen].Flag()) {
-                out.format(" \u25AF");
+                out.format("\033[0;33m ——\033[0m");
             }
             else if (board.rowEdge[col][rowlen].Owner() == Player1) {
-                out.format("\033[0;31m \u2500\033[0m");
+                out.format("\033[0;31m ——\033[0m");
             } else if (board.rowEdge[col][rowlen].Owner() == Player2) {
-                out.format("\033[0;34m \u2500\033[0m");
+                out.format("\033[0;34m ——\033[0m");
             } else {
-                out.format(" \u2500");
+                out.format(" ——");
             }
         }
         out.format("%n");
@@ -194,7 +199,7 @@ public class Model{
         for (int row = rowlen-1; row >=0; row--) {
             for (int col = 0; col < collen + 1; col++) {
                 if(board.colEdge[col][row].Flag()) {
-                    out.format("\u25AF");
+                    out.format("\033[0;33m\u2502\033[0m");
                 }
                 else if (board.colEdge[col][row].Owner() == Player1) {
                     out.format("\033[0;31m\u2502\033[0m");
@@ -206,11 +211,11 @@ public class Model{
 
                 if (col != collen) {
                     if (board.box(col, row).Owner() == Player1) {
-                        out.format("\033[0;31m\u2588\033[0m");
+                        out.format("\033[0;31m\u2588\u2588\033[0m");
                     } else if (board.box(col, row).Owner() == Player2) {
-                        out.format("\033[0;34m\u2588\033[0m");
+                        out.format("\033[0;34m\u2588\u2588\033[0m");
                     } else {
-                        out.format(" ");
+                        out.format("  ");
                     }
                 }
             }
@@ -219,14 +224,14 @@ public class Model{
 
             for (int col = 0; col < collen; col++) {
                 if(board.rowEdge[col][row].Flag()) {
-                    out.format(" \u25AF");
+                    out.format("\033[0;33m ——\033[0m");
                 }
                 else if (board.rowEdge[col][row].Owner() == Player1) {
-                    out.format("\033[0;31m \u2500\033[0m");
+                    out.format("\033[0;31m ——\033[0m");
                 } else if (board.rowEdge[col][row].Owner() == Player2) {
-                    out.format("\033[0;34m \u2500\033[0m");
+                    out.format("\033[0;34m ——\033[0m");
                 } else {
-                    out.format(" \u2500");
+                    out.format(" ——");
                 }
             }
 
@@ -240,7 +245,7 @@ public class Model{
         } else {
             winner = Player1.score() > Player2.score() ? "Player1" : "Player2";
         }
-        out.format("] %n%n%n(Player1's score: %d) (Player2's score: %d) %n", Player1.score(), Player2.score());
+        out.format("] %n%n%n(\033[0;31mPlayer1\033[0m's score: %d) (\033[0;34mPlayer2\033[0m's score: %d) %n", Player1.score(), Player2.score());
         if(over.equals("over")){out.format("(The WINNER is %s) %n", winner);}
         out.format("(Game is %s)", over);
         return out.toString();
