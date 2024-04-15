@@ -169,7 +169,6 @@ public class Model{
         return new boolean[]{false, false};
     }
 
-    @Override
     /** Returns the model as a string. */
     public String toString() {
         Formatter out = new Formatter();
@@ -251,7 +250,6 @@ public class Model{
         return out.toString();
     }
 
-    @Override
     /** Returns whether two models are equal. */
     public boolean equals(Object o) {
         if (o == null) {
@@ -263,7 +261,6 @@ public class Model{
         }
     }
 
-    @Override
     /** Returns hash code of Model’s string. */
     public int hashCode() {
         return toString().hashCode();
